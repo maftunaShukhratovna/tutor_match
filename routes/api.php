@@ -1,7 +1,10 @@
 <?php
 
-use App\Router;
+use Source\Router;
+use App\Controllers\API\UserController;
 
+Router::post('/api/users', [UserController::class , 'store']);
 
-Router::get('/api/test', function(){});
-Router::get('/api/test', function(){});
+// use App\Models\User;
+// $user=new User;
+// $user->create('ramzan', "ramzan@gmail.com", '1234');
