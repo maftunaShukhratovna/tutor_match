@@ -19,7 +19,9 @@ class User extends DB
 
         $this->createApiToken($userId);
 
+        //echo $this->api_tokens;
         return true;
+
     }
 
 
@@ -34,6 +36,7 @@ class User extends DB
         $user = $result->fetch_assoc();
 
         if ($user && password_verify($password, $user['password'])) {
+            $this->createApiToken($user['id']);
             return true;
         } else {
             return false;

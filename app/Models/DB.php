@@ -7,7 +7,7 @@ class DB{
     public $user;
     public $pass;
     public $database;
-    protected $conn;
+    public $conn;
 
     public function __construct() {
         $this->host = $_ENV['DB_HOST'];
@@ -17,6 +17,10 @@ class DB{
     
         $this->conn = new \mysqli($this->host, $this->user, $this->pass, $this->database);
     
+    }
+
+    public function getConnection(){
+        return $this->conn;
     }
 }
 ?>

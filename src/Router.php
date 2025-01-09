@@ -1,6 +1,6 @@
 <?php
 
-namespace Source;
+namespace src;
 
 class Router {
     public $currentRoute;
@@ -24,6 +24,7 @@ class Router {
         }
         return $resourceValue ?: false;
     }
+
     public static function runCallback (string $route, callable|array $callback): void {
         if (gettype($callback) == 'array'){
             $resourceValue = self::getResource($route);
@@ -64,6 +65,14 @@ class Router {
         }
     }
 
+    public static function putApi($route, $callback): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+            self::extracted($route, $callback);
+        }
+    }
+
+
     public static function put (string $route, callable|array $callback): void {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'PUT') {
             if ((isset($_POST['_method']) && $_POST['_method'] == 'PUT') || $_SERVER['REQUEST_METHOD'] == 'PUT') {
@@ -82,5 +91,23 @@ class Router {
 
     public static function isTelegram (): bool {
         return mb_stripos(self::getRoute(), '/telegram') === 0;
+    }
+
+    // private static function callback(){
+    // }
+
+    public static function extracted($route, $callback): void {
+        $resourceValue = self::getResource($route);
+        if ($resourceValue) {
+            $resourceRoute = str_replace('{id}', $resourceValue, $route);
+            if ($resourceRoute == self::getResource($route)) {
+                $callback($resourceValue);
+                exit();
+            }
+        }
+        if ($route == self::getRoute()) {
+            $callback();
+            exit();
+        }
     }
 }
