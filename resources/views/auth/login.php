@@ -55,7 +55,9 @@
     </div>
 </div>
 
-<script src="js/main.js" >  </script>
+<script src="js/main.js" > </script>
+
+<!-- <script> alert ('Hello World from js'); </script> -->
 
 </body>
 </html>

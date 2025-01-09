@@ -4,7 +4,7 @@ function test(){
         password = document.getElementById("password");
 
     if(email.value === "" || password.value === ""){
-        errorMessage.innerHTML = "email va passwordni toldir";
+        errorMessage.innerHTML = "Enter email/password";
         errorMessage.style.color = "red";
     }
 }
