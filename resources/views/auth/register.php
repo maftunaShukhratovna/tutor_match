@@ -14,7 +14,7 @@
             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Create your account</h2>
             <p class="mt-2 text-center text-sm text-gray-600">
                 Already have an account?
-                <a href="login.html" class="font-medium text-indigo-600 hover:text-indigo-500">
+                <a href="/login" class="font-medium text-indigo-600 hover:text-indigo-500">
                     Sign in
                 </a>
             </p>
@@ -23,7 +23,7 @@
             <div class="rounded-md shadow-sm -space-y-px">
                 <div>
                     <label for="name" class="sr-only">Full name</label>
-                    <input id="name" name="name" type="text" required
+                    <input id="name" name="full_name" type="text" required
                            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                            placeholder="Full name">
                 </div>
@@ -53,11 +53,12 @@
                 <label for="terms" class="ml-2 block text-sm text-gray-900">
                     I agree to the
                     <a href="#" class="text-indigo-600 hover:text-indigo-500">Terms and Conditions</a>
+                    <p id="forTest" class="text-red-500 text-sm mt-2"></p>
                 </label>
             </div>
 
             <div>
-                <button type="submit"
+                <button type="button" onclick="register()"
                         class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Create Account
                 </button>
@@ -65,5 +66,7 @@
         </form>
     </div>
 </div>
+
+<script src="js/register.js"> </script>
 </body>
 </html>

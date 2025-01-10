@@ -19,7 +19,7 @@ Trait Auth{
             ], 400);
         }
 
-        $token=str_replace('Bearer','',$headers['Authorization']);
+        $token=str_replace('Bearer ','',$headers['Authorization']);
 
         $db=new DB();
         $conn=$db->getConnection();

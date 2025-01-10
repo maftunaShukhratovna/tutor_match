@@ -4,38 +4,40 @@ namespace App\Http\controllers\API;
 
 use App\Models\User;
 use App\Traits\Validator;
-use JetBrains\PhpStorm\NoReturn;
 
 
 class UserController
 {
     use Validator;
 
-    #[NoReturn] public function store(): void
-    {
+    public function store(): void {
         $userData = $this->validate([
             'full_name' => 'string',
             'email' => 'string',
             'password' => 'string',
         ]);
-
+    
         $user = new User();
-
-        //var_dump($user);
-
         $userCreated = $user->create(
             $userData['full_name'],
             $userData['email'],
             $userData['password']
         );
-
+    
         if ($userCreated) {
-            echo "sucess";
-            apiResponse(['message' => 'User created successfully',
-                               'token'=>$user->api_tokens,
-                              ], 201);
+            header('Content-Type: application/json');
+            echo json_encode([
+                'message' => 'User created successfully',
+                'token' => $user->api_tokens,
+            ]);
+            exit; 
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(['message' => 'User creation failed']);
+            http_response_code(400);
+            exit;
         }
-
+    
     }
 
     public function login(){
@@ -50,5 +52,9 @@ class UserController
                 'token'=>$user->api_tokens,
             ]);
         }
+
+        apiResponse([
+            'message'=>'Invalid credentials',
+        ], 401);
     }
 }

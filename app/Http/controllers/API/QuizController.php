@@ -13,7 +13,7 @@ class QuizController{
             apiResponse([
                 'message'=>'quiz created succesfully'
             ],201);
-
+            
         }
     }
 }
