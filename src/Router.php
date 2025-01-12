@@ -15,47 +15,52 @@ class Router {
 
     public static function getResource ($route): false|string {
         $resourceIndex = mb_stripos($route, '{id}');
-        if (!$resourceIndex) {
-            return false;
+        if ($resourceIndex !== false) {
+            $resourceValue = substr(self::getRoute(), $resourceIndex);
+            if ($resourceValue && ($limit = mb_stripos($resourceValue, '/'))) {
+                return substr($resourceValue, 0, $limit);
+            }
+            return $resourceValue ?: false;
         }
-        $resourceValue = substr(self::getRoute(), $resourceIndex);
-        if ($limit = mb_stripos($resourceValue, '/')) {
-            return substr($resourceValue, 0, $limit);
-        }
-        return $resourceValue ?: false;
+        return false;
     }
 
-    public static function runCallback (string $route, callable|array $callback): void {
-        if (gettype($callback) == 'array'){
+    public static function runCallback (string $route, callable|array $callback, ?string $middleware = null): void {
+        if (is_array($callback)) {
             $resourceValue = self::getResource($route);
             if ($resourceValue) {
                 $resourceRoute = str_replace('{id}', $resourceValue, $route);
                 if ($resourceRoute == self::getRoute()) {
+                    self::middleware($middleware);
                     (new $callback[0])->{$callback[1]}();
                     exit();
                 }
             }
             if ($route == self::getRoute()) {
+                self::middleware($middleware);
                 (new $callback[0])->{$callback[1]}();
                 exit();
             }
-        }
-        $resourceValue = self::getResource($route);
-        if ($resourceValue) {
-            $resourceRoute = str_replace('{id}', $resourceValue, $route);
-            if ($resourceRoute == self::getRoute()) {
-                $callback($resourceValue);
+        } else {
+            $resourceValue = self::getResource($route);
+            if ($resourceValue) {
+                $resourceRoute = str_replace('{id}', $resourceValue, $route);
+                if ($resourceRoute == self::getRoute()) {
+                    $callback($resourceValue);
+                    exit();
+                }
+            }
+            if ($route == self::getRoute()) {
+                self::middleware($middleware);
+                $callback();
                 exit();
             }
         }
-        if ($route == self::getRoute()) {
-            $callback();
-            exit();
-        }
     }
-    public static function get (string $route, callable|array $callback): void {
+
+    public static function get (string $route, callable|array $callback, ?string $middleware = null): void {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            self::runCallback($route, $callback);
+            self::runCallback($route, $callback, $middleware);
         }
     }
 
@@ -65,14 +70,6 @@ class Router {
         }
     }
 
-    public static function putApi($route, $callback): void
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-            self::extracted($route, $callback);
-        }
-    }
-
-
     public static function put (string $route, callable|array $callback): void {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'PUT') {
             if ((isset($_POST['_method']) && $_POST['_method'] == 'PUT') || $_SERVER['REQUEST_METHOD'] == 'PUT') {
@@ -80,11 +77,13 @@ class Router {
             }
         }
     }
+
     public static function delete (string $route, callable|array $callback): void {
         if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
             self::runCallback($route, $callback);
         }
     }
+
     public static function isApiCall (): bool {
         return mb_stripos(self::getRoute(), '/api') === 0;
     }
@@ -93,21 +92,13 @@ class Router {
         return mb_stripos(self::getRoute(), '/telegram') === 0;
     }
 
-    // private static function callback(){
-    // }
-
-    public static function extracted($route, $callback): void {
-        $resourceValue = self::getResource($route);
-        if ($resourceValue) {
-            $resourceRoute = str_replace('{id}', $resourceValue, $route);
-            if ($resourceRoute == self::getResource($route)) {
-                $callback($resourceValue);
-                exit();
+    public static function middleware (?string $middleware = null): void {
+        if ($middleware) {
+            $middlewareConfig = require '../config/middleware.php';
+            if (is_array($middlewareConfig) && array_key_exists($middleware, $middlewareConfig)) {
+                $middlewareClass = $middlewareConfig[$middleware];
+                (new $middlewareClass)->handle();
             }
-        }
-        if ($route == self::getRoute()) {
-            $callback();
-            exit();
         }
     }
 }

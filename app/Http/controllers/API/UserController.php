@@ -54,7 +54,18 @@ class UserController
         }
 
         apiResponse([
+            'errors'=>[
             'message'=>'Invalid credentials',
+            ]
         ], 401);
+    }
+
+    public function show(){
+        apiResponse([
+            'user'=>[
+                'name'=>'user',
+                'email'=>'user@gmail.com',
+            ],
+        ]);
     }
 }
