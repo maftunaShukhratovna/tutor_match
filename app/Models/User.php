@@ -43,4 +43,11 @@ class User extends DB
         }
     }
 
+    public function getUserById(int $id){
+        $query = "SELECT id,full_name, email, updated_at, created_at FROM users WHERE id=?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
 }

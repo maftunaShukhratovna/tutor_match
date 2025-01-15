@@ -16,3 +16,5 @@ Router::get('/dashboard', [HomeController::class, 'homepage']);
 Router::get('/createquiz', [HomeController::class, 'createquiz']);
 Router::get('/myquiz', [HomeController::class, 'myquiz']);
 Router::get('/statistic', [HomeController::class, 'statistic']);
+
+Router::notFound();

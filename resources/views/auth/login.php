@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Quiz App</title>
-    <link rel="stylesheet" href="css/tailwind.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
+<?php require '../resources/views/components/header.php';  ?>
 
 <body class="bg-gray-50">
     <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -21,7 +12,7 @@
                     </a>
                 </p>
             </div>
-            <form id="form" class="mt-8 space-y-6" action="/dashboard" method="POST">
+            <form id="form" class="mt-8 space-y-6" action="/dashboard" method="POST" onsubmit="login(event)">
                 <div class="rounded-md shadow-sm -space-y-px">
                     <div>
                         <label for="email" class="sr-only">Email address</label>
@@ -36,19 +27,23 @@
                             placeholder="Password">
                     </div>
                 </div>
-                
+
+                <!-- Error message container -->
+                <div id="error" class="text-red-500 text-sm mt-2"></div>
+
                 <div class="flex items-center justify-between">
                     <div class="text-sm">
                         <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
                             Forgot your password?
                         </a>
-                        <p id="forTest" class="text-red-500 text-sm mt-2"></p>
                     </div>
                 </div>
 
+                <!-- Submit button with loading text -->
                 <div>
-                    <button type="button" onclick="login()"
+                    <button type="submit"
                         class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <span id="loading" class="hidden">Loading...</span>
                         Sign in
                     </button>
                 </div>
@@ -56,10 +51,32 @@
         </div>
     </div>
 
-    <script src="js/login.js"> </script>
+    <script>
+        async function login(event) {
+            event.preventDefault();
+            document.getElementById('loading').classList.remove('hidden');
+            const button = event.target;
+            button.disabled = true;
 
-    <!-- <script> alert ('Hello World from js'); </script> -->
+            let form = document.getElementById("form"),
+                formData = new FormData(form);
 
-</body>
-
-</html>
+            const { default: apiFetch } = await import('./js/utils/apiFetch.js');
+            
+            try {
+                const data = await apiFetch('/login', { method: 'POST', body: formData });
+                localStorage.setItem('token', data.token);
+                window.location.href = '/dashboard';
+            } catch (error) {
+                document.getElementById('error').innerHTML = '';
+                
+                Object.keys(error.data.errors).forEach(err => {
+                    document.getElementById('error').innerHTML += `<p class="text-red-500 mt-1">${error.data.errors[err]}</p>`;
+                });
+            } finally {
+                document.getElementById('loading').classList.add('hidden');
+                button.disabled = false;
+            }
+        }
+    </script>
+<?php require '../resources/views/components/footer.php';  ?>

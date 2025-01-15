@@ -92,6 +92,13 @@ class Router {
         return mb_stripos(self::getRoute(), '/telegram') === 0;
     }
 
+    public static function notFound(){
+        // if(self::isApiCall()){
+        //     apiResponse(['error'=>'Not Found page'], 404);
+        // }
+        view('notfound');
+    }
+
     public static function middleware (?string $middleware = null): void {
         if ($middleware) {
             $middlewareConfig = require '../config/middleware.php';

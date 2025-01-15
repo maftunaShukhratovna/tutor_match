@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\controllers\API;
+namespace App\Http\Controllers\API;
 
 use App\Models\User;
 use App\Traits\Validator;
-
 
 class UserController
 {
     use Validator;
 
-    public function store(): void {
+    public function store(): void
+    {
         $userData = $this->validate([
             'full_name' => 'string',
             'email' => 'string',
@@ -25,6 +25,7 @@ class UserController
         );
     
         if ($userCreated) {
+
             header('Content-Type: application/json');
             echo json_encode([
                 'message' => 'User created successfully',
@@ -37,35 +38,38 @@ class UserController
             http_response_code(400);
             exit;
         }
-    
     }
 
-    public function login(){
-        $userData=$this->validate([
-            'email'=>'string',
-            'password'=>'string',
+    public function login()
+    {
+        $userData = $this->validate([
+            'email' => 'string',
+            'password' => 'string',
         ]);
-        $user=new User;
-        if($user->getUser($userData['email'], $userData['password'])){
+
+        $user = new User();
+        if ($user->getUser($userData['email'], $userData['password'])) {
+
             apiResponse([
-                'message'=>'User logged in succesfully',
-                'token'=>$user->api_tokens,
+                'message' => 'User logged in successfully',
+                'token' => $user->api_tokens,
             ]);
         }
 
         apiResponse([
-            'errors'=>[
-            'message'=>'Invalid credentials',
+            'errors' => [
+                'message' => 'Invalid credentials',
             ]
         ], 401);
     }
 
-    public function show(){
+    public function show()
+    {
         apiResponse([
-            'user'=>[
-                'name'=>'user',
-                'email'=>'user@gmail.com',
-            ],
-        ]);
+            'errors' => [
+                'message' => 'Unauthorized',
+            ]
+        ], 401);
     }
+
 }
