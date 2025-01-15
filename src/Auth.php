@@ -6,9 +6,9 @@ use App\Models\DB;
 use App\Models\User;
 
 trait Auth {
-    public static function getToken() {
+    public function getToken() {
         $headers = getallheaders();
-    
+
         if (!isset($headers['Authorization'])) {
             apiResponse([
                 'message' => 'Unauthorized'
@@ -24,8 +24,8 @@ trait Auth {
         return str_replace('Bearer ', '', $headers['Authorization']);
     }
 
-    public static function getUserCorrectToken() {
-        $token = self::getToken();
+    public function getUserCorrectToken() {
+        $token = $this->getToken();
         $db = new DB();
         $conn = $db->getConnection();
 
@@ -33,10 +33,9 @@ trait Auth {
         $stmt = $conn->prepare($query);
         $stmt->bind_param("s", $token);
         $stmt->execute();
-        
-        
+
         $result = $stmt->get_result();
-        
+
         if ($result->num_rows === 0) {
             apiResponse([
                 'message' => 'Unauthorized'
@@ -46,16 +45,17 @@ trait Auth {
         return $result->fetch_assoc();
     }
 
-    public static function user() {
-        $token = self::getUserCorrectToken();
-        
+    public function user() {
+        $token = $this->getUserCorrectToken();
+
         if (!$token) {
             apiResponse([
                 'message' => 'Unauthorized'
             ], 401);
         }
-        
+
         $user = new User();
         return $user->getUserById($token['user_id']);
     }
 }
+
