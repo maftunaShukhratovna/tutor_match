@@ -6,4 +6,5 @@
     <title>Quiz App</title>
     <link rel="stylesheet" href="css/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="/js/utils/addquiz.js"></script>
 </head>

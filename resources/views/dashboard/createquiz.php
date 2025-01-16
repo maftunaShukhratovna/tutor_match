@@ -5,9 +5,8 @@
         <?php require '../resources/views/components/sidebar.php' ?>
 
         <div class="flex-1">
-
-        <?php require '../resources/views/components/topnavigation.php' ?>
-
+            <?php require '../resources/views/components/topnavigation.php' ?>
+            <!-- Content -->
             <main class="p-6">
                 <div class="min-h-screen bg-gray-100">
                     <div class="container">
@@ -18,7 +17,7 @@
                         </div>
 
                         <!-- Main Form -->
-                        <form class="space-y-4" id="quizForm">
+                        <form class="space-y-4" id="quizForm" onsubmit="createQuiz(event)">
                             <!-- Quiz Details Section -->
                             <div class="bg-white p-6 rounded-lg shadow-md">
                                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Quiz Details</h3>
@@ -34,8 +33,8 @@
                                                   class="w-full px-4 py-2 border rounded-lg mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
                                     </div>
                                     <div>
-                                        <label for="timeLimit" class="block text-sm font-medium text-gray-700">Time Limit (minutes)</label>
-                                        <input type="number" id="timeLimit" name="timeLimit" placeholder="Time Limit" min="1" required
+                                        <label for="time_limit" class="block text-sm font-medium text-gray-700">Time Limit (minutes)</label>
+                                        <input type="number" id="time_limit" name="time_limit" placeholder="Time Limit" min="1" required
                                                class="px-4 py-2 border rounded-lg mt-1 block w-48 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                                     </div>
                                 </div>
@@ -101,4 +100,45 @@
             </main>
         </div>
     </div>
-    <?php require '../resources/views/components/footer.php';  ?>
+    <script>
+    async function createQuiz(event) {
+        event.preventDefault();
+
+        const button = event.submitter; 
+        button.disabled = true; 
+
+        const form = document.getElementById("quizForm");
+        const formData = new FormData(form); 
+
+        const timeLimit = formData.get('time_limit');
+        if (!timeLimit || parseInt(timeLimit) <= 0) {
+            alert('Please provide a valid time limit (in minutes).');
+            button.disabled = false; 
+            return;
+        }
+
+        const {
+            default: apiFetch
+        } = await import('/js/utils/apiFetch.js');
+
+        try {
+            const data = await apiFetch('/quizzes', {
+                method: 'POST',
+                body: formData,
+                headers: {} 
+            });
+
+            alert("Quiz created successfully!");
+        } catch (error) {
+            const errorElement = document.getElementById('error');
+            if (errorElement) {
+                errorElement.innerHTML = error.data?.message || error.message || "An error occurred";
+            } else {
+                alert(error.message || "An error occurred");
+            }
+        } finally {
+            button.disabled = false; 
+        }
+    }
+    </script>
+    <?php require '../resources/views/components/footer.php' ?>

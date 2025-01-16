@@ -1,4 +1,3 @@
-    <!-- Top Navigation -->
     <header class="bg-white shadow-sm">
         <div class="h-16 flex items-center justify-between px-4">
             <button class="md:hidden text-gray-600" onclick="document.getElementById('sidebar').classList.toggle('-translate-x-full')">

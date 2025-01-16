@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use App\Traits\Validator;
 use Src\Auth;
-use src\middlewares\AuthMiddleware;
 
 class UserController
 {

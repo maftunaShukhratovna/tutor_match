@@ -1,21 +1,22 @@
-<?php 
+<?php
 
 namespace App\Models;
 
 use App\Models\DB;
 
-class Options extends DB{
-    public function create($data){
+class Quizzes extends DB{
+    public function create($title, $description, $user_id, $time_limit){
         $conn = $this->getConnection();
-        $stmt = $conn->prepare("INSERT INTO options (option, question_id) VALUES (?, ?)");
-        $stmt->bind_param("si", $data['option'], $data['question_id']);
+        $stmt = $conn->prepare("INSERT INTO quizzes (title, description, user_id, time_limit, created_at, updated_at) VALUES (?, ?, ?, ?, NOW(), NOW())");
+        $stmt->bind_param("ssii", $title, $description, $user_id, $time_limit);
         $stmt->execute();
         $stmt->close();
+        return $conn->insert_id;
     }
     
     public function get($id){
         $conn = $this->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM options WHERE id = ?");
+        $stmt = $conn->prepare("SELECT * FROM quizzes WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -25,24 +26,24 @@ class Options extends DB{
     
     public function getAll(){
         $conn = $this->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM options");
+        $stmt = $conn->prepare("SELECT * FROM quizzes");
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     
-    public function update($data){
+    public function update($title, $description, $id){
         $conn = $this->getConnection();
-        $stmt = $conn->prepare("UPDATE options SET option = ? WHERE id = ?");
-        $stmt->bind_param("si", $data['option'], $data['id']);
+        $stmt = $conn->prepare("UPDATE quizzes SET title = ?, description = ? WHERE id = ?");
+        $stmt->bind_param("ssi", $title, $description, $id);
         $stmt->execute();
         $stmt->close();
     }
     
     public function delete($id){
         $conn = $this->getConnection();
-        $stmt = $conn->prepare("DELETE FROM options WHERE id = ?");
+        $stmt = $conn->prepare("DELETE FROM quizzes WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $stmt->close();

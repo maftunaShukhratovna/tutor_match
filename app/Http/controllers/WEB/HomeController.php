@@ -35,6 +35,9 @@ class HomeController{
         view('dashboard/statistic');
     }
 
+    public function components($route){
+        view($route);
+    }
 }
 
 
