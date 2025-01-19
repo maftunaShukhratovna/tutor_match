@@ -11,6 +11,42 @@ use Src\Auth;
 class QuizController{
 
     use Validator;
+
+    public function index(){
+        $auth = new class {
+            use Auth;
+        };
+        $user = $auth->user();
+
+        $quizzes = (new Quizzes())->getByUserId($user['id']);
+        //dd($user['id']);
+        //dd($quizzes);
+
+        
+        apiResponse(['message' => $quizzes]);     
+    }
+
+    public function destroy(int $quiz_id){
+        $quiz=new Quizzes();
+        $quiz->delete($quiz_id);
+        apiResponse([
+            'message'=>'quiz deleted succesfully'
+        ]);
+    }
+
+    public function updateQuiz(int $quiz_id){
+        $auth = new class {
+            use Auth;
+        };
+        $user = $auth->user();
+
+        $quiz= new Quizzes();
+        $data=$quiz->getByQuizId($quiz_id, $user['id']);
+        apiResponse(['message' => $data]); 
+
+    }
+
+
     public function store(){
     
         $quizItems=$this->validate([
@@ -48,7 +84,6 @@ class QuizController{
             $correct = $questionItem['correct'];
 
         foreach ($questionItem['options'] as $key => $optionItem) {
-            //$isCorrect = isset($questionItem['correct']) && $questionItem['correct'] == $key ? 1 : 0;
 
             $options->create(
                 $question_id,

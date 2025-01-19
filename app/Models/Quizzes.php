@@ -14,24 +14,26 @@ class Quizzes extends DB{
         return $conn->insert_id;
     }
     
-    public function get($id){
+    public function getByUserId($user_id){
         $conn = $this->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM quizzes WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-        return $result->fetch_assoc();
-    }
-    
-    public function getAll(){
-        $conn = $this->getConnection();
-        $stmt = $conn->prepare("SELECT * FROM quizzes");
+        $stmt = $conn->prepare("SELECT * FROM quizzes WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    
+    public function getByQuizId($quiz_id, $user_id){
+        $conn = $this->getConnection();
+        $stmt = $conn->prepare("SELECT * FROM quizzes WHERE user_id = ? and id = ?");
+        $stmt->bind_param("ii", $user_id, $quiz_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    
     
     public function update($title, $description, $id){
         $conn = $this->getConnection();

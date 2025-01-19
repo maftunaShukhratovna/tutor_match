@@ -35,6 +35,14 @@ class HomeController{
         view('dashboard/statistic');
     }
 
+    public function takequiz(){
+        view('quiz/takequiz');
+    }
+
+    // public function updatequiz(){
+    //     view('dashboard/updatequiz');
+
+    // }
     public function components($route){
         view($route);
     }

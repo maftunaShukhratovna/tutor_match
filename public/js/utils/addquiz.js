@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     let questionCounter = 0;
+    console.log(document.getElementById('quizForm')); // Should not log null
+
 
     // Form validation
     document.getElementById('quizForm').addEventListener('submit', function(e) {
@@ -47,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         div.innerHTML = `
             <div>
-                <h3>${questionNum}</h3>
+                <h3>${questionNum+1}</h3>
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Question Text</label>
@@ -145,4 +147,4 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-});
+});  

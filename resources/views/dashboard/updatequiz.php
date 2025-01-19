@@ -17,7 +17,7 @@
                         </div>
 
                         <!-- Main Form -->
-                        <form class="space-y-4" id="quizForm" onsubmit="createQuiz(event)">
+                        <form class="space-y-4" id="quizForm">
                             <!-- Quiz Details Section -->
                             <div class="bg-white p-6 rounded-lg shadow-md">
                                 <h3 class="text-xl font-semibold text-gray-800 mb-4">Quiz Details</h3>
@@ -100,49 +100,5 @@
             </main>
         </div>
     </div>
-    <script>
-    async function createQuiz(event) {
-        event.preventDefault();
-
-        const button = event.submitter; 
-        button.disabled = true; 
-
-        const form = document.getElementById("quizForm");
-        const formData = new FormData(form); 
-
-        const timeLimit = formData.get('time_limit');
-        if (!timeLimit || parseInt(timeLimit) <= 0) {
-            alert('Please provide a valid time limit (in minutes).');
-            button.disabled = false; 
-            return;
-        }
-
-        const {
-            default: apiFetch
-        } = await import('/js/utils/apiFetch.js');
-
-        try {
-            const data = await apiFetch('/quizzes', {
-                method: 'POST',
-                body: formData,
-                headers: {} 
-            });
-
-            alert("Quiz created successfully!");
-            window.location.href = '/myquiz';
-            
-        } catch (error) {
-            const errorElement = document.getElementById('error');
-            if (errorElement) {
-                errorElement.innerHTML = error.data?.message || error.message || "An error occurred";
-            } else {
-                alert(error.message || "An error occurred");
-            }
-        } finally {
-            button.disabled = false; 
-        }
-    }
-    </script>
-
-    <script src="/js/utils/addquiz.js"></script>
+   
     <?php require '../resources/views/components/footer.php' ?>

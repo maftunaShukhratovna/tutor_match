@@ -1,11 +1,12 @@
 <?php require '../resources/views/components/header.php' ?>
+
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
-    <?php require '../resources/views/components/sidebar.php' ?>
+        <?php require '../resources/views/components/sidebar.php' ?>
+
         <!-- Main Content -->
         <div class="flex-1">
-            
-        <?php require '../resources/views/components/topnavigation.php' ?>
+            <?php require '../resources/views/components/topnavigation.php' ?>
 
             <!-- Content -->
             <main class="p-6">
@@ -47,12 +48,32 @@
                 </div>
 
                 <!-- Quiz Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Quiz Card 1 -->
-                    <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="quizList">
+                    <!-- Quiz Cards will be dynamically inserted here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+    async function quizzes() {
+        const quizList = document.getElementById('quizList');
+
+        try {
+            const { default: apiFetch } = await import('/js/utils/apiFetch.js');
+            const data = await apiFetch('/quizzes', { method: 'GET' });
+
+            // Check if data.message exists and is an array
+            if (data && Array.isArray(data.message)) {
+                data.message.forEach((quiz) => {
+                    // Create a new quiz card
+                    const quizCard = document.createElement('div');
+                    quizCard.className = 'bg-white rounded-lg shadow-sm p-6';
+
+                    quizCard.innerHTML = `
                         <div class="flex justify-between items-start mb-4">
                             <div>
-                                <h3 class="text-lg font-semibold">Basic Mathematics</h3>
+                                <h3 class="text-lg font-semibold">${quiz.title}</h3>
                                 <p class="text-gray-500 text-sm">Mathematics</p>
                             </div>
                             <div class="dropdown">
@@ -63,35 +84,54 @@
                                 </button>
                             </div>
                         </div>
-                        <p class="text-gray-600 mb-4">Test basic arithmetic and algebraic concepts</p>
+                        <p class="text-gray-600 mb-4">${quiz.description}</p>
                         <div class="flex justify-between items-center mb-4">
-                            <span class="text-sm text-gray-500">10 Questions</span>
-                            <span class="text-sm text-gray-500">15 minutes</span>
+                            <span class="text-sm text-gray-500">${quiz.time_limit} min</span>
+                            <span class="text-sm text-gray-500">Created on: ${new Date(quiz.created_at).toLocaleDateString()}</span>
                         </div>
                         <div class="mb-4">
                             <div class="w-full bg-gray-200 rounded-full h-2">
                                 <div class="bg-green-500 h-2 rounded-full" style="width: 75%"></div>
                             </div>
-                            <span class="text-sm text-gray-500">75% Completion Rate</span>
+                            <span class="text-sm text-gray-500">Completion Rate: 75%</span>
                         </div>
                         <div class="flex justify-between">
                             <button class="text-indigo-600 hover:text-indigo-800">Edit</button>
                             <button class="text-green-600 hover:text-green-800">View Results</button>
-                            <button class="text-red-600 hover:text-red-800">Delete</button>
+                            <button class="text-red-600 hover:text-red-800" onclick="deleteQuiz(${quiz.id})">Delete</button>
                         </div>
-                    </div>
+                    `;
 
-                    <!-- Quiz Card 2 -->
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <!-- Similar structure to Quiz Card 1 -->
-                    </div>
+                    // Append the quiz card to the quizList
+                    quizList.appendChild(quizCard);
+                });
+            } else {
+                quizList.innerHTML = `<p class="text-gray-600">No quizzes available.</p>`;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('There was an issue loading the quizzes. Please check your internet connection.');
+        }
+    }
 
-                    <!-- Quiz Card 3 -->
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <!-- Similar structure to Quiz Card 1 -->
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-    <?php require '../resources/views/components/footer.php';  ?>
+    quizzes();
+
+    async function deleteQuiz(id){
+        if(confirm('Are u sure')){
+            const {default: apiFetch} = await import('/js/utils/apiFetch.js');
+            const data = await apiFetch(`/quizzes/${id}`, {
+                method: 'DELETE'
+            })
+                .then(data=>{
+                    window.location.reload();
+                })
+                .catch(error=>{
+                    alert('check your internet.');
+                });
+        }
+    }
+</script>
+
+
+    <?php require '../resources/views/components/footer.php'; ?>
+</body>

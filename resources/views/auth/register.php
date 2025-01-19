@@ -12,7 +12,7 @@
                     </a>
                 </p>
             </div>
-            <form id="form" class="mt-8 space-y-6" action="#" method="POST" onsubmit="register(event)">
+            <form id="form" class="mt-8 space-y-6" method="POST" onsubmit="register(event)">
                 <div class="rounded-md shadow-sm -space-y-px">
                     <div>
                         <label for="name" class="sr-only">Full name</label>

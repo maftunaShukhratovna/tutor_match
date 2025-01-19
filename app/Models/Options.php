@@ -14,6 +14,12 @@ class Options extends DB{
         $stmt->close();
     }
     
+
+
+
+
+
+    
     public function get($id){
         $conn = $this->getConnection();
         $stmt = $conn->prepare("SELECT * FROM options WHERE id = ?");
