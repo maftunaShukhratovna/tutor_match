@@ -2,6 +2,8 @@
 
 namespace App\Http\controllers\WEB;
 
+use App\Models\Quizzes;
+
 class HomeController{
     public function home(){
         view('home');
@@ -19,33 +21,7 @@ class HomeController{
         view('auth/register');
     }
 
-    public function homepage(){
-        view('dashboard/home');
-    }
-
-    public function myquiz(){
-        view('dashboard/myquiz');
-    }
-
-    public function createquiz(){
-        view('dashboard/createquiz');
-    }
-
-    public function statistic(){
-        view('dashboard/statistic');
-    }
-
-    public function takequiz(){
-        view('quiz/takequiz');
-    }
-
-    // public function updatequiz(){
-    //     view('dashboard/updatequiz');
-
-    // }
-    public function components($route){
-        view($route);
-    }
+    
 }
 
 

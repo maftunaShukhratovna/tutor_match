@@ -16,13 +16,15 @@ class UserController
             'full_name' => 'string',
             'email' => 'string',
             'password' => 'string',
+            'status' => 'string',
         ]);
     
         $user = new User();
         $userCreated = $user->create(
             $userData['full_name'],
             $userData['email'],
-            $userData['password']
+            $userData['password'],
+            $userData['status']
         );
     
         if ($userCreated) {
@@ -59,24 +61,24 @@ class UserController
 
         apiResponse([
             'errors' => [
-                'message' => 'Invalid credentials',
+                'message' => 'Password or email is incorrect',
             ]
         ], 401);
     }
 
-    public function show()
-    {
-        $auth = new class {
-            use Auth;
-        };
+    // public function show()
+    // {
+    //     $auth = new class {
+    //         use Auth;
+    //     };
 
-        $user = $auth->user();
+    //     $user = $auth->user();
 
-        apiResponse([
-                'data'=> $user,
-                'message' => 'user info',
+    //     apiResponse([
+    //             'data'=> $user,
+    //             'message' => 'user info',
             
-        ]);
-    }
+    //     ]);
+    // }
 
 }
