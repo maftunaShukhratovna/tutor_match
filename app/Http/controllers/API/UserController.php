@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use App\Traits\Validator;
 use Src\Auth;
+use App\Models\Students;
 
 class UserController
 {
@@ -26,6 +27,18 @@ class UserController
             $userData['password'],
             $userData['status']
         );
+
+        if($userData['status'] == 'Learner'){
+            $student = new Students();
+            $studentCreated = $student->create(
+                $userCreated,
+                $userData['full_name'],
+                $userData['email'],
+                $userData['password'],
+                );
+        }
+
+
     
         if ($userCreated) {
 
@@ -66,19 +79,20 @@ class UserController
         ], 401);
     }
 
-    // public function show()
-    // {
-    //     $auth = new class {
-    //         use Auth;
-    //     };
+    public function show()
+    {
+        $auth = new class {
+            use Auth;
+        };
 
-    //     $user = $auth->user();
+        
+        $user = $auth->user();
 
-    //     apiResponse([
-    //             'data'=> $user,
-    //             'message' => 'user info',
+        apiResponse([
+                'data'=> $user,
+                'message' => 'user info',
             
-    //     ]);
-    // }
+        ]);
+    }
 
 }

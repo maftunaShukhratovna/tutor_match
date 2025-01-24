@@ -1,33 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutor Match</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<?php components('auth/header'); ?>
 
 <body class="font-sans bg-gray-50">
     <!-- Navbar -->
-    <nav class="flex justify-between items-center bg-gray-100 px-6 py-4 border-b border-gray-300">
-        <!-- Logo Section -->
-        <div class="flex items-center space-x-4">
-            <div class="flex items-center space-x-2">
-                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.vecteezy.com%2Ffree-vector%2Ftutor-logo&psig=AOvVaw1TkHIR0cm2cI1yzkNsp2-F&ust=1737601406756000&source=images&cd=vfe&opi=89978449&ved=0CBcQjhxqFwoTCLiW9e2riIsDFQAAAAAdAAAAABAJ"
-                    alt="Logo" class="w-10 h-10">
-                <span class="text-xl font-bold text-blue-600">Tutor Match</span>
-            </div>
-            <a href="/about" class="text-gray-600 hover:text-blue-600 font-medium">Explore</a>
-        </div>
-        <div class="flex space-x-4">
-            <a href="#" class="text-gray-600 hover:text-blue-600 font-medium">Search</a>
-            <a href="login" class="text-gray-600 hover:text-blue-600 font-medium">Log in</a>
-            <a href="register"
-                class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 font-medium shadow-md">Sign
-                up</a>
-        </div>
-    </nav>
+    <?php components('auth/navbar'); ?>
 
 
     <div class="min-h-screen bg-green-50 flex items-center justify-center py-10 px-4">
@@ -124,7 +99,7 @@
             formData = new FormData(form);
 
 
-        const roleText = document.querySelector("h2").textContent.split(' ')[4]; // 'Sign Up as a Teacher', 'Sign Up as a Learner', etc.
+        const roleText = document.querySelector("h2").textContent.split(' ')[4];
 
         if (roleText) {
             formData.append('status', roleText);
@@ -136,10 +111,17 @@
             try {
                 const data = await apiFetch('/register', {
                     method: 'POST',
-                    body: formData
-                });
+                    body: formData 
+                }); 
+
                 localStorage.setItem('token', data.token);
-                window.location.href = '/';
+                if(roleText==='learner'){
+                    window.location.href = '/student/home';
+                }
+                 else {
+                    window.location.href = '/';
+                 }
+                
             } catch (error) {
                 document.getElementById('error').innerHTML = '';
                 Object.keys(error.data.errors).forEach(err => {
@@ -157,39 +139,6 @@
 
     }
     </script>
-</body>
 
-</html>
+    <?php components('auth/footer'); ?>
 
-
-
-<!-- <script>
-        async function register(event) {
-            event.preventDefault(); 
-            const button = event.target;
-            button.disabled = true;
-            const loadingMessage = document.createElement('span');
-            loadingMessage.classList.add('text-white');
-            loadingMessage.textContent = ' Creating account...';
-            button.appendChild(loadingMessage);
-
-            let form = document.getElementById("form"),
-                formData = new FormData(form);
-
-            const { default: apiFetch } = await import('./js/utils/apiFetch.js');
-            try {
-                const data = await apiFetch('/register', { method: 'POST', body: formData });
-                localStorage.setItem('token', data.token);
-                window.location.href = '/dashboard';
-            } catch (error) {
-                document.getElementById('error').innerHTML = '';
-                Object.keys(error.data.errors).forEach(err => {
-                    document.getElementById('error').innerHTML += `<p class="text-red-500 mt-1">${error.data.errors[err]}</p>`;
-                });
-            } finally {
-                button.disabled = false;
-                button.removeChild(loadingMessage);
-            }
-        }
-    </script>
- -->

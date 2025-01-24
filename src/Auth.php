@@ -3,7 +3,7 @@
 namespace src;
 
 use App\Models\DB;
-use App\Models\User;
+use App\Models\Students;
 
 trait Auth {
     public function getToken() {
@@ -54,8 +54,10 @@ trait Auth {
             ], 401);
         }
 
-        $user = new User();
-        return $user->getUserById($token['user_id']);
+
+        $students = new Students();
+
+        return $students->getStudent($token['user_id']);
     }
 }
 

@@ -21,6 +21,18 @@ class HomeController{
         view('auth/register');
     }
 
+    public function studentprofile(){
+        view('students/profile');
+    }
+
+    public function studentHomepage(){
+        view('students/home');
+    }
+
+    public function studenteditpage(){
+        view('students/edit');
+    }
+
     
 }
 

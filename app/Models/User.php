@@ -7,7 +7,7 @@ class User extends DB
 {
     use HasApiTokens;
 
-    public function create(string $full_name, string $email, string $password, string $status): bool
+    public function create(string $full_name, string $email, string $password, string $status): int
     {
         $query = "INSERT INTO users (full_name, email, password, status, updated_at, created_at) VALUES (?, ?, ?, ?, NOW(), NOW())";
         $stmt = $this->conn->prepare($query);
@@ -18,9 +18,8 @@ class User extends DB
         $userId = $this->conn->insert_id;
 
         $this->createApiToken($userId);
-
-        return true;
-
+        
+        return $userId;
     }
 
 
@@ -40,6 +39,18 @@ class User extends DB
         } else {
             return false;
         }
+    }
+
+    public function getUserById(int $id) {
+        $query = "SELECT id FROM users WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+    
+        $stmt->bind_param('i', $id);
+    
+        $stmt->execute();
+    
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
     }
 
     
