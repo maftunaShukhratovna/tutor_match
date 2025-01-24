@@ -8,20 +8,23 @@
   <div class="max-w-8xl mx-auto mt-8 bg-purple-100 p-4 rounded-lg shadow">
     <div class="flex items-center justify-between">
       <!-- Profile Section -->
-
+    <script>
+        getInfo();
+    </script>
       <div class="flex items-center space-x-10">
         <img src="https://cdn.kastatic.org/images/avatars/svg/blobby-blue.svg" alt="Avatar" class="w-16 h-16 rounded-full">
         <div>
-          <h1 id="profile-email" class="text-xl font-bold"></h1>
+          <h1 id="email" class="text-xl font-bold"> </h1>
+          <p>Learner</p>
           <div class="flex space-x-2 text-sm text-gray-500">
             <button  onclick="showSection('profile')" class="hover:underline">Create your profile</button>
             <span>-</span>
-            <button onclick="showSection('profile')" class="hover:underline">Add your bio</>
+            <button onclick="showSection('profile')" class="hover:underline">Add your bio</s>
           </div>
         </div>
       </div>
       
-      
+    
       <button onclick="showSection('profile')" class="px-4 py-2 bg-gray-300 hover:bg-gray-300 text-gray-700 rounded-lg">Edit Profile</>
 
     </div>

@@ -115,7 +115,7 @@
                 }); 
 
                 localStorage.setItem('token', data.token);
-                if(roleText==='learner'){
+                if(roleText==='Learner'){
                     window.location.href = '/student/home';
                 }
                  else {

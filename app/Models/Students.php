@@ -21,7 +21,7 @@ class Students extends DB{
     }
     
 
-    public function update(int $student_id, string $full_name, string $email, int $age, string $description) {
+    public function update(int $student_id, string $full_name, string $email, int $age, string $description, string $password) {
         $conn = $this->getConnection();
     
     

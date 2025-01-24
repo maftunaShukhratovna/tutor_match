@@ -7,9 +7,10 @@
 
     <!-- Modal Title -->
     <h2 class="text-lg font-medium text-gray-800 mb-4 text-center">Edit basic info</h2>
+    
 
     <!-- Form -->
-    <form id="profileForm" class="space-y-4">
+    <form id="updateProfileForm" class="space-y-4" onsubmit="updateProfile()">
       <div class="flex justify-between">
         <!-- Profile Picture (Left Section) -->
         <div class="flex flex-col items-center mb-4 w-1/3">
@@ -51,6 +52,7 @@
               class="mt-1 w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring focus:ring-blue-200 focus:border-blue-400"
             />
           </div>
+          <input type="number" id="student-id" class="hidden"/>
 
           <!-- Age -->
           <div class="mb-4">
@@ -65,7 +67,7 @@
 
           <!-- Bio -->
           <div class="mb-4">
-            <label for="bio" class="block text-sm font-medium text-gray-700">BIO</label>
+            <label for="decription" class="block text-sm font-medium text-gray-700">BIO</label>
             <textarea
               id="description"
               rows="3"

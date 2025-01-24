@@ -95,4 +95,33 @@ class UserController
         ]);
     }
 
+    public function updateProfile(){
+        $auth = new class {
+            use Auth;
+        };
+
+        $user = $auth->user();
+        
+
+        $userData = $this->validate([
+            'full_name' => 'string',
+            'email' => 'string',
+            'password' => 'string',
+            'age' => 'int',
+            'description' => 'string',
+            'student_id' => 'int', 
+        ]);
+
+        
+        $students = new Students(); 
+
+        $students->update($userData['student_id'], $userData['full_name'], $userData['email'], $userData['age'], $userData['description'], $userData['password']);
+
+        apiResponse([
+            'message' => 'User updated successfully',
+        ]);
+
+
+    }
+
 }
