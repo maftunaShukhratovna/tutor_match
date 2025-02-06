@@ -2,7 +2,6 @@
 
 namespace App\Http\controllers\WEB;
 
-use App\Models\Quizzes;
 
 class HomeController{
     public function home(){
@@ -29,9 +28,29 @@ class HomeController{
         view('students/home');
     }
 
-    public function studenteditpage(){
-        view('students/edit');
+    public function teacherprofile(){
+        view('teachers/profile');
     }
+
+    public function waitingpage(){
+        view('teachers/waitpage');
+    }
+    public function adminhome(){
+        view('admin/home');
+    }
+
+    public function adminstudents(){
+        view('admin/students');
+    }
+
+    public function newTeachers(){
+        view('admin/newteachers');
+    }
+    
+
+
+
+
 
     
 }

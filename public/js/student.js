@@ -9,7 +9,7 @@ function toggleModal() {
     event.preventDefault();
  
     const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
+    const email = document.getElementById('emailuser').value;
     const password = document.getElementById('password').value;
     const age = document.getElementById('age').value;
     const description = document.getElementById('description').value;
@@ -36,6 +36,7 @@ function toggleModal() {
         student_id: studentId,  
       }),
     })
+
 
 
       .then(data => {
@@ -71,11 +72,12 @@ function toggleModal() {
           console.log(data);
 
           document.getElementById('name').value = data.data.full_name;
-          document.getElementById('email').value = data.data.email;
+          document.getElementById('emailuser').value = data.data.email;
           document.getElementById('password').value = data.data.password;
           document.getElementById('age').value = data.data.age;
           document.getElementById('description').value = data.data.description;
           document.getElementById('student-id').value = data.data.student_id;
+          
           
         });
     }

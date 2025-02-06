@@ -19,6 +19,23 @@ class Students extends DB{
             return false; 
         }
     }
+
+    public function getAllStudents() {
+        $conn = $this->getConnection();
+    
+        $query_students = "SELECT * FROM students";
+        $stmt_students = $conn->prepare($query_students);
+        $stmt_students->execute();
+        $result_students = $stmt_students->get_result();
+    
+        $students = [];
+        while ($row = $result_students->fetch_assoc()) {
+            $students[] = $row;
+        }
+    
+        return $students; 
+    }
+    
     
 
     public function update(int $student_id, string $full_name, string $email, int $age, string $description, string $password) {
@@ -50,4 +67,11 @@ class Students extends DB{
         return $student;
     }
     
+    public function delete(int $student_id){
+        $conn = $this->getConnection();
+        $stmt = $conn->prepare("DELETE FROM students WHERE id = ?");
+        $stmt->bind_param("i", $student_id);
+        $stmt->execute();
+        $stmt->close();
+    }
 }

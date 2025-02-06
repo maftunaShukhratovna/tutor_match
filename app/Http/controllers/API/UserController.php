@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Traits\Validator;
 use Src\Auth;
 use App\Models\Students;
+use App\Models\Teachers;
 
 class UserController
 {
@@ -28,6 +29,7 @@ class UserController
             $userData['status']
         );
 
+
         if($userData['status'] == 'Learner'){
             $student = new Students();
             $studentCreated = $student->create(
@@ -38,21 +40,25 @@ class UserController
                 );
         }
 
+        if($userData['status'] == 'Teacher'){
+            $teacher = new Teachers();
+            $teacherCreated = $teacher->create(
+                $userCreated,
+                $userData['full_name'],
+                $userData['email'],
+                $userData['password'],
+                );
+            }
 
     
         if ($userCreated) {
-
-            header('Content-Type: application/json');
-            echo json_encode([
+            apiResponse([
                 'message' => 'User created successfully',
                 'token' => $user->api_tokens,
             ]);
-            exit; 
+           
         } else {
-            header('Content-Type: application/json');
-            echo json_encode(['message' => 'User creation failed']);
-            http_response_code(400);
-            exit;
+            apiResponse(['message' => 'User creation failed'], 400);
         }
     }
 
@@ -64,13 +70,15 @@ class UserController
         ]);
 
         $user = new User();
-        if ($user->getUser($userData['email'], $userData['password'])) {
+        
+        $data=$user->getUser($userData['email'], $userData['password']);
 
             apiResponse([
                 'message' => 'User logged in successfully',
                 'token' => $user->api_tokens,
+                'data'=> $data,
             ]);
-        }
+        
 
         apiResponse([
             'errors' => [
@@ -79,49 +87,9 @@ class UserController
         ], 401);
     }
 
-    public function show()
-    {
-        $auth = new class {
-            use Auth;
-        };
 
-        
-        $user = $auth->user();
+    
 
-        apiResponse([
-                'data'=> $user,
-                'message' => 'user info',
-            
-        ]);
-    }
-
-    public function updateProfile(){
-        $auth = new class {
-            use Auth;
-        };
-
-        $user = $auth->user();
-        
-
-        $userData = $this->validate([
-            'full_name' => 'string',
-            'email' => 'string',
-            'password' => 'string',
-            'age' => 'int',
-            'description' => 'string',
-            'student_id' => 'int', 
-        ]);
-
-        
-        $students = new Students(); 
-
-        $students->update($userData['student_id'], $userData['full_name'], $userData['email'], $userData['age'], $userData['description'], $userData['password']);
-
-        apiResponse([
-            'message' => 'User updated successfully',
-        ]);
-
-
-    }
+    
 
 }

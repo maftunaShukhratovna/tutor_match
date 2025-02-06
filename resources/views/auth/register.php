@@ -36,19 +36,17 @@
                             class="mt-1 px-4 py-2 border border-gray-300 rounded w-full focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Create Password</label>
                         <input type="password" id="password" name="password"
                             class="mt-1 px-4 py-2 border border-gray-300 rounded w-full focus:ring-blue-500 focus:border-blue-500">
                     </div>
-                    <div>
+                    <!-- <div>
                         <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm
                             Password</label>
                         <input type="password" name="confirm-password"
                             class="mt-1 px-4 py-2 border border-gray-300 rounded w-full focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div id="error">
-
-                    </div>
+                    </div> -->
+                    <div id="error"></div>
 
 
                     <button type="submit" id="register_btn"
@@ -87,58 +85,59 @@
     }
 
     async function register(event) {
-        event.preventDefault();
-        const button = event.target;
-        button.disabled = true;
-        const loadingMessage = document.createElement('span');
-        loadingMessage.classList.add('text-white');
-        loadingMessage.textContent = ' Creating account...';
-        button.appendChild(loadingMessage);
+    event.preventDefault();
+    const button = event.target;
+    button.disabled = true;
+    const loadingMessage = document.createElement('span');
+    loadingMessage.classList.add('text-white');
+    loadingMessage.textContent = ' Creating account...';
+    button.appendChild(loadingMessage);
 
-        let form = document.getElementById("form"),
-            formData = new FormData(form);
+    let form = document.getElementById("form"),
+        formData = new FormData(form);
 
+    document.getElementById('error').innerHTML = '';
 
+ 
         const roleText = document.querySelector("h2").textContent.split(' ')[4];
 
         if (roleText) {
             formData.append('status', roleText);
 
-            const {
-                default: apiFetch
-            } = await import('./js/utils/apiFetch.js');
+            const { default: apiFetch } = await import('./js/utils/apiFetch.js');
 
             try {
                 const data = await apiFetch('/register', {
                     method: 'POST',
-                    body: formData 
-                }); 
+                    body: formData
+                });
 
                 localStorage.setItem('token', data.token);
-                if(roleText==='Learner'){
+
+                if (roleText === 'Learner') {
                     window.location.href = '/student/home';
+                } else if (roleText === 'Teacher') {
+                    window.location.href = '/teacher/profile';
+                } else if (roleText === 'Admin') {
+                    window.location.href = '/admin/home';
                 }
-                 else {
-                    window.location.href = '/';
-                 }
-                
+
             } catch (error) {
-                document.getElementById('error').innerHTML = '';
                 Object.keys(error.data.errors).forEach(err => {
                     document.getElementById('error').innerHTML +=
                         `<p class="text-red-500 mt-1">${error.data.errors[err]}</p>`;
                 });
+
             } finally {
                 button.disabled = false;
                 button.removeChild(loadingMessage);
             }
         } else {
-            document.getElementById('error').innerHTML = `<p class="text-red-500 mt-1">Status is missing </p>`;
+            document.getElementById('error').innerHTML = `<p class="text-red-500 mt-1">Status is missing</p>`;
         }
 
+}
 
-    }
     </script>
 
     <?php components('auth/footer'); ?>
-

@@ -23,7 +23,7 @@ class User extends DB
     }
 
 
-    public function getUser(string $email, string $password): bool
+    public function getUser(string $email, string $password): array| bool
     {
         $query = "SELECT * FROM users WHERE email = ?";
         $stmt = $this->conn->prepare($query);
@@ -35,14 +35,14 @@ class User extends DB
 
         if ($user && password_verify($password, $user['password'])) {
             $this->createApiToken($user['id']);
-            return true;
-        } else {
+            return $user;
+        } else 
             return false;
-        }
+        
     }
 
     public function getUserById(int $id) {
-        $query = "SELECT id FROM users WHERE id = ?";
+        $query = "SELECT status FROM users WHERE id = ?";
         $stmt = $this->conn->prepare($query);
     
         $stmt->bind_param('i', $id);

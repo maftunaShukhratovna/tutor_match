@@ -4,6 +4,8 @@ namespace src;
 
 use App\Models\DB;
 use App\Models\Students;
+use App\Models\Teachers;
+use App\Models\User;
 
 trait Auth {
     public function getToken() {
@@ -55,9 +57,20 @@ trait Auth {
         }
 
 
+        $user=new User;
         $students = new Students();
+        $teacher=new Teachers();
 
-        return $students->getStudent($token['user_id']);
+        $info=$user->getUserById($token['user_id']);
+        
+
+        if($info['status']==="Learner"){
+            return $students->getStudent($token['user_id']);
+        }
+         else if($info['status']==="Teacher"){
+            return $teacher->getTeacher($token['user_id']);
+         }
+
     }
 }
 

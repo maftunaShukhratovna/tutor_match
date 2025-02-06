@@ -83,10 +83,11 @@
       <div class="flex justify-between">
         <!-- Email -->
         <div class="w-1/2 pr-2">
-          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+          <label for="emailuser" class="block text-sm font-medium text-gray-700">Email</label>
           <input
             type="email"
-            id="email"
+            id="emailuser"
+            value=""
             placeholder="Enter your email"
             class="mt-1 w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring focus:ring-blue-200 focus:border-blue-400"
           />
