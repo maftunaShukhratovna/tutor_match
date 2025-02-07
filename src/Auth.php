@@ -67,8 +67,10 @@ trait Auth {
         if($info['status']==="Learner"){
             return $students->getStudent($token['user_id']);
         }
+
          else if($info['status']==="Teacher"){
-            return $teacher->getTeacher($token['user_id']);
+            $id=$teacher->getTeacher($token['user_id']);
+            return $teacher->getTeacherId($id['teacher_id']);
          }
 
     }

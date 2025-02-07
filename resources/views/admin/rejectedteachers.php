@@ -4,8 +4,8 @@
     <div class="flex">
         <?php components("admins/sidebar"); ?>
         <div class="flex-1 p-8">
-            <h1 class="text-3xl font-semibold text-gray-800">Registered Teachers List</h1>
-            <p class="mt-4 text-gray-600">Manage all registered teachers.</p>
+            <h1 class="text-3xl font-semibold text-gray-800">Rejected Teachers List</h1>
+            <p class="mt-4 text-gray-600">Manage all rejected teachers.</p>
 
             <div class="mt-6 overflow-x-auto">
                 <table class="w-full table-auto border-collapse border border-gray-300 bg-white shadow-lg rounded-lg">
@@ -15,11 +15,10 @@
                             <th class="px-4 py-2 border">Full Name</th>
                             <th class="px-4 py-2 border">Date of Birth</th>
                             <th class="px-4 py-2 border">Email</th>
-                    
                             <th class="px-4 py-2 border">Subject</th>
                             <th class="px-4 py-2 border">Created At</th>
                             <th class="px-4 py-2 border">Profile</th>
-                            <th class="px-4 py-2 border">Status</th>
+                            <th class="px-4 py-2 border">Reason for rejection</th>
                         </tr>
                     </thead>
                     <tbody id="newTeachersTableBody">
@@ -34,7 +33,7 @@
     const { default: apiFetch } = await import('/js/utils/apiFetch.js');
 
     try {
-        const response = await apiFetch('/admin/newTeachers/getInfo?status=pending', {
+        const response = await apiFetch('/admin/newTeachers/getInfo?status=rejected', {
             method: 'GET',
         });
 
@@ -53,7 +52,6 @@
                         <td class="px-4 py-2 border">${teacher.full_name}</td>
                         <td class="px-4 py-2 border">${teacher.birth_date ? teacher.birth_date : "N/A"}</td>
                         <td class="px-4 py-2 border">${teacher.email}</td>
-                        
                         <td class="px-4 py-2 border">${subject}</td>
                         <td class="px-4 py-2 border">${teacher.created_at}</td>
                         <td class="px-4 py-2 border text-center">
@@ -61,19 +59,8 @@
                                 See More
                             </a>
                         </td>
-                        <td class="px-4 py-2 border text-center">
-                            <!-- Tasdiqlash tugmasi -->
-                            <button onclick="changeStatus(${teacher.id}, 'confirmed')" 
-                                class="bg-green-600 text-white px-3 py-1 rounded-lg hover:bg-green-700">
-                                Confirm
-                            </button>
+                        <td class="px-4 py-2 border">${teacher.rejection_reason}</td>
 
-                            <!-- Rad etish tugmasi -->
-                            <button onclick="changeStatus(${teacher.id}, 'rejected')" 
-                                class="bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700">
-                                Reject
-                            </button>
-                        </td>
                     </tr>
                 `;
                 tableBody.innerHTML += row;
@@ -84,48 +71,6 @@
         console.error("Error fetching teachers:", error);
     }
 };
-
-
-async function changeStatus(teacherId, status) {
-    let statusReason = "confirmed";
-
-    const confirmationText = status === "confirmed"
-        ? "Do you want to confirm this teacher?"
-        : "Do you want to reject this teacher?";
-
-    if (!confirm(confirmationText)) {
-        return;
-    }
-
-    if (status === "rejected") {
-        statusReason = prompt("Iltimos, rad etish sababini kiriting:");
-        if (!statusReason) {
-            alert("Rad etish sababi kiritilmadi.");
-            return;
-        }
-    }
-
-    try {
-        const { default: apiFetch } = await import('/js/utils/apiFetch.js');
-
-        const response = await apiFetch(`/admin/changeTeacherStatus/${teacherId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                status,
-                status_reason: statusReason 
-            })
-        });
-
-        location.reload();
-
-    } catch (error) {
-        console.error("Xatolik:", error);
-        alert("Server bilan bog'lanib bo'lmadi.");
-    }
-}
 
     </script>
 </body>

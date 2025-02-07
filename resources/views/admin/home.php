@@ -1,4 +1,7 @@
-<?php components("admins/header"); ?>
+<?php components("admins/header");
+    components("admins/navbar");
+
+?>
 
 <body class="bg-gray-100">
     <div class="flex">

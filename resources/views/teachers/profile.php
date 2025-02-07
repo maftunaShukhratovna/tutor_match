@@ -27,7 +27,7 @@
                             Upload
                         </button>
                     </div>
-                    <input type="number" id="teacher-id" class="hidden"/>
+                    <input type="number" id="teacher-id" class="hidden" />
 
 
                     <div class="flex-1">
@@ -39,11 +39,19 @@
                 </div>
 
                 <div class="flex justify-between">
+                    <div class="w-1/2 pr-2">
+                        <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="+998901234567"
+                            class="mt-1 w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring focus:ring-blue-200 focus:border-blue-400"
+                             required />
+                    </div>
+
                     <!-- Email -->
                     <div class="w-1/2 pr-2">
                         <label for="emailuser" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" id="emailuser"  placeholder="Enter your email"
-                            class="mt-1 w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring focus:ring-blue-200 focus:border-blue-400" required/>
+                        <input type="email" id="emailuser" placeholder="Enter your email"
+                            class="mt-1 w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring focus:ring-blue-200 focus:border-blue-400"
+                            required />
                     </div>
 
                     <!-- Password -->
@@ -67,7 +75,7 @@
 
                 <div class="mb-4">
                     <label for="province" class="block text-sm font-medium text-gray-700">Province</label>
-                    <select name="province" id="province" 
+                    <select name="province" id="province"
                         class="mt-1 w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring focus:ring-blue-200 focus:border-blue-400"
                         required>
                         <option value="Tashkent">Tashkent</option>
@@ -82,7 +90,7 @@
                         <option value="Bukhoro">Bukhoro</option>
                         <option value="Navoiy">Navoiy</option>
                         <option value="Xorazm">Xorazm</option>
-                        
+
                     </select>
                 </div>
 
@@ -90,15 +98,15 @@
                     <label for="description" class="block text-sm font-medium text-gray-700">About You</label>
                     <textarea id="description" name="description" rows="4"
                         class="mt-1 w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring focus:ring-blue-200 focus:border-blue-400"
-                        placeholder="Describe yourself..." required ></textarea>
+                        placeholder="Describe yourself..." required></textarea>
                 </div>
 
                 <!-- Education Section -->
                 <div class="mb-6">
                     <h3 class="text-xl font-semibold mb-2">Education</h3>
                     <div id="education-section">
-                        <button type="button" onclick="addEducation()"
-                            class="bg-green-500 text-white rounded px-4 py-2" required>Add University</button>
+                        <button type="button" onclick="addEducation()" class="bg-green-500 text-white rounded px-4 py-2"
+                            required>Add University</button>
                     </div>
                 </div>
 
@@ -141,14 +149,14 @@
                 <div class="mb-6">
                     <h3 class="text-xl font-semibold mb-2">Certificates</h3>
                     <div id="certificates-section">
-                            <button type="button" onclick="addCertificate()"
-                                class="bg-green-500 text-white rounded px-4 py-2">Add Certificate</button>
+                        <button type="button" onclick="addCertificate()"
+                            class="bg-green-500 text-white rounded px-4 py-2">Add Certificate</button>
                     </div>
 
                     <h3 class="text-xl font-semibold mb-2">University Diplomas</h3>
                     <div id="diploma-section">
-                            <button type="button" onclick="addDiploma()"
-                                class="bg-green-500 text-white rounded px-4 py-2">Add Diploma</button>
+                        <button type="button" onclick="addDiploma()"
+                            class="bg-green-500 text-white rounded px-4 py-2">Add Diploma</button>
                     </div>
                 </div>
 
@@ -172,10 +180,9 @@
             document.getElementById('name').value = response.data.full_name;
             document.getElementById('emailuser').value = response.data.email;
             document.getElementById('passworduser').value = response.data.password;
-            document.getElementById('teacher-id').value=response.data.teacher_id;
-            
-            };
+            document.getElementById('teacher-id').value = response.data.teacher_id;
 
+        };
         </script>
     </div>
     <?php components('teachers/footer');

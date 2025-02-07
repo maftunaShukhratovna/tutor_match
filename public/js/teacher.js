@@ -17,6 +17,8 @@ async function updateProfile() {
     const experience = document.getElementById('experience').value;
     const subject = document.getElementById('subject').value;
     const workplace = document.getElementById('workplace').value;
+    const phone = document.getElementById('phone').value;
+
     
     const token = localStorage.getItem('token');
     const { default: apiFetch } = await import('/js/utils/apiFetch.js');
@@ -53,6 +55,7 @@ async function updateProfile() {
                 subject: subject,
                 workplace: workplace,
                 teacher_id: teacherId,
+                phone: phone,
                 education: education 
             }),
         });
@@ -63,7 +66,7 @@ async function updateProfile() {
 
     } catch (error) {
         console.error('Error updating profile:', error);
-        alert('Failed to update profile.');
+        alert('education required');
     }
 }
 

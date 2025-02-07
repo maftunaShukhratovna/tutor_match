@@ -24,6 +24,7 @@ class TeacherController{
             "education"=>"array",
             "description" => "string",
             "teacher_id" => "int", 
+            "phone"=>"string",
         ]);
 
         $teacher=new Teachers();
@@ -36,6 +37,7 @@ class TeacherController{
             $userData['province'],
             $userData['description'],
             $userData['password'],
+            $userData['phone']
         );
 
         $data=$teacher->getTeacher($userData['teacher_id']);
@@ -59,15 +61,17 @@ class TeacherController{
             use Auth;
         };
 
-        
         $user = $auth->user();
 
-        apiResponse([
-                'data'=> $user,
-                'message' => 'user info',
-            
-        ]);
+        $teacher=new Teachers();
 
+        $data=$teacher->getTeacherById($user);
+
+
+        apiResponse([
+                'data'=> $data,
+                'message' => 'user info',
+        ]);
     }
 
 }

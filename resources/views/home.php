@@ -15,9 +15,9 @@
         <h1 class="text-4xl font-bold text-gray-800 mt-8">For every student, every classroom.</h1>
         <p class="text-gray-600 mt-4 text-lg">We’re a nonprofit with the mission to provide a free, world-class education for anyone, anywhere.</p>
         <div class="flex justify-center space-x-4 mt-8">
-            <a href="register" class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 font-medium shadow-md">Learners</a>
-            <a href="register" class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 font-medium shadow-md">Teachers</a>
-            <a href="register" class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 font-medium shadow-md">Admin</a>
+            <a href="login" class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 font-medium shadow-md">Learners</a>
+            <a href="login" class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 font-medium shadow-md">Teachers</a>
+            <a href="login" class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 font-medium shadow-md">Admin</a>
         </div>
     </div>
 

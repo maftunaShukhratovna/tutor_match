@@ -46,7 +46,26 @@ class HomeController{
     public function newTeachers(){
         view('admin/newteachers');
     }
+
+    public function seeTeacherInfo($teacher_id){
+        view('admin/teacherInfo',['teacher_id'=>$teacher_id]);
+    }
     
+    public function rejectedTeachers(){
+        view('admin/rejectedteachers');
+    }
+
+    public function activeTeachers(){
+        view('admin/activeteachers');
+    }
+
+    public function teacherhome(){
+        view('teachers/home');
+    }
+
+    public function myinfo(){
+        view('teachers/myinfo');
+    }
 
 
 
