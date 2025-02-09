@@ -14,6 +14,7 @@ trait HasApiTokens
 
         $query = "INSERT INTO user_api_tokens (user_id, token, expires_at, created_at) VALUES (?, ?, ?, NOW())";
         $stmt = $this->conn->prepare($query);
+        
 
         $stmt->bind_param("iss", $userId, $this->api_tokens, $this->duration);
         $stmt->execute();

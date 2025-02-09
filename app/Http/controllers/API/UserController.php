@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\User;
 use App\Traits\Validator;
-use Src\Auth;
+use src\Auth;
 use App\Models\Students;
 use App\Models\Teachers;
 
@@ -22,12 +22,15 @@ class UserController
         ]);
     
         $user = new User();
+
         $userCreated = $user->create(
             $userData['full_name'],
             $userData['email'],
             $userData['password'],
             $userData['status']
         );
+
+
 
 
         if($userData['status'] == 'Learner'){
@@ -79,7 +82,6 @@ class UserController
                 'data'=> $data,
             ]);
         
-
         apiResponse([
             'errors' => [
                 'message' => 'Password or email is incorrect',

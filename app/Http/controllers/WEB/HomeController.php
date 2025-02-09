@@ -20,7 +20,7 @@ class HomeController{
         view('auth/register');
     }
 
-    public function studentprofile(){
+    public function studenteditpage(){
         view('students/profile');
     }
 

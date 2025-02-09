@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Traits\Validator;
-use Src\Auth;
+use src\Auth;
 use App\Models\Students;
 
 
@@ -12,12 +12,7 @@ class StudentController{
     use Validator;
     public function show()
     {
-        $auth = new class {
-            use Auth;
-        };
-
-        
-        $user = $auth->user();
+        $user = Auth::user();
 
         apiResponse([
                 'data'=> $user,

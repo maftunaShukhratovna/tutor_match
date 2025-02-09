@@ -1,16 +1,13 @@
-<?php 
+<?php
 
 namespace src\middlewares;
 
-use src\Auth;
+use src\middlewares\Middleware;
 
-class AuthMiddleware {
-    public function handle(): void {
-        $auth = new class {
-            use Auth;
-        };
 
-        $user = $auth->user();
-
+class AuthMiddleware implements Middleware{
+    public function handle(): void
+    {
+        \src\Auth::check();
     }
 }

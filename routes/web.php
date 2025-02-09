@@ -9,9 +9,17 @@ Router::get('/about',[HomeController::class,'about']);
 Router::get('/login',[HomeController::class,'login']);
 Router::get('/register',[HomeController::class,'register']);
 
-Router::get('/studentprofile',[HomeController::class,'studentprofile']);
+// Router::get('/studentprofile',[HomeController::class,'studentprofile']);
 Router::get('/student/home',[HomeController::class,'studentHomePage']);
 Router::get('/student/editprofile',[HomeController::class,'studenteditpage']);
+Router::get('/student/classes',[ClassControllers::class,'studentclasses']);
+Router::get('/student/myclasses',[ClassControllers::class,'myclasses']);
+
+
+
+
+
+
 
 Router::get('/teacher/profile',[HomeController::class,'teacherprofile']);
 Router::get('/teacher/waitpage',[HomeController::class,'waitingpage']);
@@ -19,8 +27,10 @@ Router::get('/teacher/home',[HomeController::class,'teacherhome']);
 
 Router::get('/teacher/createclass',[ClassControllers::class,'createclass']);
 
-Router::get('/teacher/myclass',[HomeController::class,'teacherclass']);
+Router::get('/teacher/myclasses',[ClassControllers::class,'myclass']);
 Router::get('/teacher/myinfo',[HomeController::class,'myinfo']);
+Router::get('/teacher/updateclass/{id}',[ClassControllers::class,'updateclass']);
+
 
 
 

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Traits\Validator;
-use Src\Auth;
+use src\Auth;
 use App\Models\Teachers;
 use App\Models\Students;
-use Illuminate\Http\Request;
+
 
 
 class AdminController{

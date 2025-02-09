@@ -61,7 +61,7 @@
 
                 <div>
                     <label class="block text-gray-700 font-medium">Description</label>
-                    <textarea name="description" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required></textarea>
+                    <textarea id="description" name="description" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500" required></textarea>
                 </div>
 
                 <div>
@@ -79,18 +79,8 @@
         </div>
     </div>
 
-    <script>
-        document.querySelector("select[name='format']").addEventListener("change", function() {
-            if (this.value === "online") {
-                document.getElementById("platform_section").classList.remove("hidden");
-                document.getElementById("address_section").classList.add("hidden");
-            } else {
-                document.getElementById("platform_section").classList.add("hidden");
-                document.getElementById("address_section").classList.remove("hidden");
-            }
-        });
-
-        async function createClass(event) {
+<script>
+    async function createClass(event) {
     event.preventDefault();
 
     const button = document.getElementById("submit-btn");
@@ -98,12 +88,10 @@
     button.innerHTML = 'Creating...';
 
     let form = document.getElementById("form"),
-        formData = new FormData(form);
+        formData = new FormData(form); // ✅ Asl form ma'lumotlarini olish
 
-    // Formatni olish
     let format = formData.get("format");
 
-    // Platform va Address maydonlarini tekshiramiz
     if (format === "online") {
         if (!formData.get("address")) {
             formData.set("address", "noinfo");
@@ -119,29 +107,33 @@
     const { default: apiFetch } = await import('/js/utils/apiFetch.js');
 
     try {
+        // ✅ Tokenni konsolga chiqarish
+        const token = localStorage.getItem('token');
+        console.log("LocalStorage'dan olingan token:", token);
+
         const data = await apiFetch('/teacher/createclass', {
             method: 'POST',
-            body: formData
+            body: formData // ✅ To'g'ri `formData` jo‘natish
         });
 
-        localStorage.setItem('token', data.token);
         button.innerHTML = 'Class Created ✅';
-
-        window.location.href = "/teacher/classes";
-        
+        window.location.href = "/teacher/myclasses";
     } catch (error) {
-        Object.keys(error.data.errors).forEach(err => {
-            document.getElementById('error').innerHTML +=
-                `<p class="text-red-500 mt-1">${error.data.errors[err]}</p>`;
-        });
-        
+        console.error("Xatolik yuz berdi:", error);
+        if (error.data && error.data.errors) {
+            Object.keys(error.data.errors).forEach(err => {
+                document.getElementById('error').innerHTML +=
+                    `<p class="text-red-500 mt-1">${error.data.errors[err]}</p>`;
+            });
+        }
         button.innerHTML = 'Create Class';
     } finally {
         button.disabled = false;
     }
 }
-</script>
 
+
+</script>
 <?php components("teachers/footer"); ?>
 
 

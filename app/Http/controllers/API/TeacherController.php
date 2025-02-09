@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Traits\Validator;
-use Src\Auth;
+use src\Auth;
 use App\Models\Teachers;
 
 class TeacherController{
@@ -57,11 +57,7 @@ class TeacherController{
 
 
     public function teacherinfo(){
-        $auth = new class {
-            use Auth;
-        };
-
-        $user = $auth->user();
+        $user = Auth::user();
 
         $teacher=new Teachers();
 

@@ -1,11 +1,5 @@
-function toggleModal() {
-    const modal = document.getElementById('profile');
-    modal.classList.toggle('hidden');
-    document.getElementById('courses').classList.remove('hidden');
-  }
 
-
-  async function updateProfile() {
+  async function updateProfile(event) {
     event.preventDefault();
  
     const name = document.getElementById('name').value;
@@ -50,50 +44,11 @@ function toggleModal() {
       });
   }
 
-  document.getElementById('profileForm').addEventListener('submit', updateProfile);
+  document.getElementById('updateProfileForm').addEventListener('submit', updateProfile);
 
 
-  async function showSection(sectionId) {
-  
-    document.querySelectorAll('.content').forEach((section) => {
-      section.classList.add('hidden');
-    });
-    
-    document.getElementById(sectionId).classList.remove('hidden');
-    
-    const { default: apiFetch } = await import('/js/utils/apiFetch.js');
 
-    if(sectionId === 'profile') {
-      apiFetch('/students/getInfo', {
-        method: 'GET' 
-      })
 
-        .then(data => {
-          console.log(data);
-
-          document.getElementById('name').value = data.data.full_name;
-          document.getElementById('emailuser').value = data.data.email;
-          document.getElementById('password').value = data.data.password;
-          document.getElementById('age').value = data.data.age;
-          document.getElementById('description').value = data.data.description;
-          document.getElementById('student-id').value = data.data.student_id;
-          
-          
-        });
-    }
-  }
-
-  async function getInfo() {
-    const { default: apiFetch } = await import('/js/utils/apiFetch.js');
-    apiFetch('/students/getInfo', {
-      method: 'GET' 
-    })
-
-      .then(data => {
-        console.log(data);
-        document.getElementById('email').value = data.data.email;
-
-      });
-  }
+ 
   
 

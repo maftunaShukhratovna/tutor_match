@@ -4,6 +4,11 @@ function view (string $page, array $data = []) {
     require 'resources/views/' . $page . '.php';
 }
 
+function redirect (string $url) {
+    header('Location: ' . $url);
+    exit();
+}
+
 
 function components(string $page, array $data = []): void
 {

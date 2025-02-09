@@ -64,7 +64,6 @@
                     window.location.href= '/admin/home';
                 }
 
-
                 
             } catch (error) {
                 document.getElementById('error').innerHTML = '';

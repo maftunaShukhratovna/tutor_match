@@ -3,51 +3,34 @@
 <body class="bg-gray-100 flex flex-col min-h-screen">
 
     <!-- Navbar -->
-<?php components("teachers/navbar"); ?>
-    
+    <?php components("teachers/navbar"); ?>
 
     <div class="flex flex-grow">
         <!-- Sidebar -->
-<?php components("teachers/sidebar"); ?>
-        
+        <?php components("teachers/sidebar"); ?>
 
         <!-- Main Content -->
-        <div class="flex-1 p-8">
-            <h1 class="text-3xl font-semibold text-gray-800">Teacher Dashboard</h1>
-            <p class="mt-4 text-gray-600">Overview of your teaching activities and classes.</p>
-
-            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                
-                <!-- Create Class Card
-                <div class="bg-white shadow-lg rounded-lg p-6">
-                    <h2 class="text-xl font-semibold text-gray-700">Create a New Class</h2>
-                    <p class="text-gray-600 mt-2">Add a new class to share with students.</p>
-                    <div class="mt-4 flex items-center space-x-2">
-                        <a href="/teacher/createclass" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Create Class</a>
-                    </div>
+        <div class="flex-1 p-6">
+            <!-- Student Section -->
+            <div class="bg-white border border-gray-200 rounded-lg shadow-lg p-6 flex items-center justify-between mt-4 relative overflow-hidden">
+                <!-- Matn qismi -->
+                <div class="max-w-md z-10">
+                    <h2 class="text-2xl font-semibold text-gray-800">It's better with students!</h2>
+                    <p class="text-gray-600 mt-2">
+                        Get a live view into your students' progress, targeted assignment recommendations, and so much more!
+                    </p>
+                    <a href="createclass" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded-md">
+                        Create a class
+                    </a>
                 </div>
 
-                My Profile Card -->
-                <!-- <div class="bg-white shadow-lg rounded-lg p-6">
-                    <h2 class="text-xl font-semibold text-gray-700">My Profile</h2>
-                    <p class="text-gray-600 mt-2">View or edit your personal information.</p>
-                    <div class="mt-4 flex items-center space-x-2">
-                        <a href="/teacher/profile" class="bg-blue-600 text-white px-4 py-2 rounded-lg">View Profile</a>
-                    </div>
-                </div> -->
-
-                <!-- My Classes Card -->
-                <!-- <div class="bg-white shadow-lg rounded-lg p-6">
-                    <h2 class="text-xl font-semibold text-gray-700">My Classes</h2>
-                    <p class="text-gray-600 mt-2">View and manage your ongoing classes.</p>
-                    <div class="mt-4 flex items-center space-x-2">
-                        <a href="/teacher/classes" class="bg-blue-600 text-white px-4 py-2 rounded-lg">View My Classes</a>
-                    </div>
-                </div> --> 
-
+                <!-- Rasm qismi -->
+                <div class="relative w-60">
+                    <img src="https://cdn.kastatic.org/images/coach-dashboard/create-class-student-heads.png" 
+                         alt="Students Illustration" class="w-full object-cover">
+                </div>
             </div>
         </div>
     </div>
 
-</body>
-</html>
+    <?php components("teachers/footer"); ?>

@@ -139,4 +139,4 @@
     </script> 
 
     <?php components('teachers/footer'); ?>
-</body>
+
