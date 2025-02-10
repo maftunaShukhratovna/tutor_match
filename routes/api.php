@@ -32,6 +32,7 @@ Router::post('/api/teacher/createclass',[ClassController::class,'store'],'auth:a
 Router::get('/api/teacher/getClasses',[ClassController::class,'getClasses'],'auth:api');
 Router::get('/api/teacher/getClasses',[ClassController::class,'getClasses'],'auth:api');
 Router::delete('/api/teacher/classes/delete/{id}',[ClassController::class,'removeClass'],'auth:api');
+Router::get('/api/teacher/joinedStudents/{id}',[ClassController::class,'getJoinedStudents'],'auth:api');
 
 
 

@@ -103,34 +103,7 @@
         </thead>
         <tbody>
             <tr class="border-b hover:bg-gray-50">
-                <td class="py-2 px-4 border-r">1</td>
-                <td class="py-2 px-4 border-r">John Smith</td>
-                <td class="py-2 px-4 border-r">20</td>
-                <td class="py-2 px-4">
-                    <button class="px-3 py-1 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600">
-                        Message
-                    </button>
-                </td>
-            </tr>
-            <tr class="border-b hover:bg-gray-50">
-                <td class="py-2 px-4 border-r">2</td>
-                <td class="py-2 px-4 border-r">Emma Johnson</td>
-                <td class="py-2 px-4 border-r">22</td>
-                <td class="py-2 px-4">
-                    <button class="px-3 py-1 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600">
-                        Message
-                    </button>
-                </td>
-            </tr>
-            <tr class="border-b hover:bg-gray-50">
-                <td class="py-2 px-4 border-r">3</td>
-                <td class="py-2 px-4 border-r">Michael Brown</td>
-                <td class="py-2 px-4 border-r">19</td>
-                <td class="py-2 px-4">
-                    <button class="px-3 py-1 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600">
-                        Message
-                    </button>
-                </td>
+                
             </tr>
         </tbody>
     </table>
@@ -139,6 +112,45 @@
 
 
     <script>
+        window.onload = async function () {
+        const classId = <?= json_encode($class_id) ?>;
+
+        const { default: apiFetch } = await import('/js/utils/apiFetch.js');
+        const response = await apiFetch(`/teacher/joinedStudents/${classId}`, { method: 'GET' });
+
+        if (response) {
+            let counter=0;
+            const tbody = document.querySelector("tbody");
+            tbody.innerHTML = ""; // Jadvalni tozalaymiz
+
+            response.data.forEach(student => {
+                counter++;
+                const row = document.createElement("tr");
+                row.className = "border-b hover:bg-gray-50";
+
+                row.innerHTML = `
+                    <td class="py-2 px-4 border-r">${counter}</td>
+                    <td class="py-2 px-4 border-r">${student.full_name}</td>
+                    <td class="py-2 px-4 border-r">${student.age ?? 'N/A'}</td>
+                    <td class="py-2 px-4">
+                        <button class="px-3 py-1 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600">
+                            Message
+                        </button>
+                    </td>
+                `;
+
+                tbody.appendChild(row);
+            });
+        } else {
+            document.querySelector("tbody").innerHTML = `
+                <tr>
+                    <td colspan="4" class="py-4 px-4 text-center text-gray-500">No students joined yet.</td>
+                </tr>
+            `;
+        }
+    };
+
+
     document.addEventListener("DOMContentLoaded", function() {
         const formatSelect = document.getElementById("formatSelect");
         const platformSection = document.getElementById("platform_section");

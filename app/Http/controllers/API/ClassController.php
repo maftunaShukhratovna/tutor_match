@@ -140,6 +140,7 @@ class ClassController{
 
         $class=new Classes();
 
+
         if($classData['action']=='register'){
             $class->registerClass($classData['student_id'], $classData['class_id']);
         } else if($classData['action']=='cancel'){
@@ -149,6 +150,17 @@ class ClassController{
 
         apiResponse([
             'message' => 'class status changed'
+        ]);
+
+    }
+
+    public function getJoinedStudents($class_id){
+        $class=new Classes();
+        $data=$class->getJoinedStudents($class_id);
+        
+        apiResponse([
+            'data'=>$data,
+            'message' => 'joined students'
         ]);
 
     }

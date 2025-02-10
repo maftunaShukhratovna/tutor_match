@@ -68,27 +68,31 @@ class Classes extends DB{
     public function getAllClasses($studentId) {
         $conn = $this->getConnection();
     
-        $query = "
-            SELECT 
-                c.*, 
-                CASE 
-                    WHEN r.student_id IS NOT NULL THEN 1 
-                    ELSE 0 
-                END AS is_registered
-            FROM classes c
-            LEFT JOIN register r 
-                ON c.id = r.class_id AND r.student_id = ?
-        ";
-    
+        // 1-qadam: register jadvalidan student_id ga mos class_id larni olish
+        $query = "SELECT class_id FROM register WHERE student_id = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("i", $studentId);
         $stmt->execute();
         $result = $stmt->get_result();
     
-        $classes = $result->fetch_all(MYSQLI_ASSOC);
+        $registeredClassIds = [];
+        while ($row = $result->fetch_assoc()) {
+            $registeredClassIds[] = $row['class_id'];
+        }
+        // 2-qadam: classes jadvalidan barcha classlarni olish
+        $query = "SELECT * FROM classes";
+        $result = $conn->query($query);
+        $classes = [];
+    
+        while ($class = $result->fetch_assoc()) {
+            // Agar class_id oldingi ro‘yxatda bo‘lsa, is_registered = 1, aks holda 0
+            $class['is_registered'] = in_array($class['id'], $registeredClassIds) ? 1 : 0;
+            $classes[] = $class;
+        }
     
         return $classes;
     }
+    
 
     public function getMyClasses($studentId) {
         $conn = $this->getConnection();
@@ -132,6 +136,27 @@ class Classes extends DB{
         $stmt->execute();
         $stmt->close();
     }
+
+    public function getJoinedStudents($classId) {
+        $conn = $this->getConnection();
+    
+        $query = "
+            SELECT s.* 
+            FROM students s
+            INNER JOIN register r ON s.id = r.student_id
+            WHERE r.class_id = ?
+        ";
+    
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $classId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $students = $result->fetch_all(MYSQLI_ASSOC);
+        
+        return $students;
+    }
+    
     
 
     

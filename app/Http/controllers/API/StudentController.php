@@ -47,7 +47,9 @@ class StudentController{
         $user = Auth::user();
     
         $classes=new Classes;
-        $data=$classes->getAllClasses($user['student_id']);
+        $data=$classes->getAllClasses($user['id']);
+        
+        // dd($data);
 
         apiResponse([
             'data'=>$data,
@@ -75,7 +77,7 @@ class StudentController{
         $user = Auth::user();
     
         $classes=new Classes;
-        $data=$classes->getMyClasses($user['student_id']);
+        $data=$classes->getMyClasses($user['id']);
 
         apiResponse([
             'data'=>$data,
