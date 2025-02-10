@@ -14,6 +14,8 @@ Router::get('/student/home',[HomeController::class,'studentHomePage']);
 Router::get('/student/editprofile',[HomeController::class,'studenteditpage']);
 Router::get('/student/classes',[ClassControllers::class,'studentclasses']);
 Router::get('/student/myclasses',[ClassControllers::class,'myclasses']);
+Router::get('/student/seeClassInfo/{id}',[ClassControllers::class,'seeClassInfo']);
+
 
 
 

@@ -87,7 +87,56 @@
                 </button>
             </form>
         </div>
-    </div>
+
+        <!-- Table -->
+<div class="bg-white shadow-lg rounded-lg p-6 max-w-5xl mx-auto mt-10">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Joined Students</h2>
+
+    <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md">
+        <thead class="bg-gray-100 border-b">
+            <tr>
+                <th class="py-2 px-4 border-r text-left text-gray-700">Student ID</th>
+                <th class="py-2 px-4 border-r text-left text-gray-700">Full Name</th>
+                <th class="py-2 px-4 border-r text-left text-gray-700">Age</th>
+                <th class="py-2 px-4 text-left text-gray-700">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b hover:bg-gray-50">
+                <td class="py-2 px-4 border-r">1</td>
+                <td class="py-2 px-4 border-r">John Smith</td>
+                <td class="py-2 px-4 border-r">20</td>
+                <td class="py-2 px-4">
+                    <button class="px-3 py-1 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600">
+                        Message
+                    </button>
+                </td>
+            </tr>
+            <tr class="border-b hover:bg-gray-50">
+                <td class="py-2 px-4 border-r">2</td>
+                <td class="py-2 px-4 border-r">Emma Johnson</td>
+                <td class="py-2 px-4 border-r">22</td>
+                <td class="py-2 px-4">
+                    <button class="px-3 py-1 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600">
+                        Message
+                    </button>
+                </td>
+            </tr>
+            <tr class="border-b hover:bg-gray-50">
+                <td class="py-2 px-4 border-r">3</td>
+                <td class="py-2 px-4 border-r">Michael Brown</td>
+                <td class="py-2 px-4 border-r">19</td>
+                <td class="py-2 px-4">
+                    <button class="px-3 py-1 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600">
+                        Message
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+
 
     <script>
     document.addEventListener("DOMContentLoaded", function() {

@@ -23,6 +23,10 @@ class ClassControllers{
     public function myclasses(){
         view('students/myclasses');
     }
+
+    public function seeClassInfo($class_id){
+        view('students/classinfo', ['class_id'=>$class_id]);
+    }
     
     
 }

@@ -8,15 +8,15 @@
                     <h1 id="emailmain" class="text-xl font-bold"> </h1>
                     <p></p>
                     <div class="flex space-x-2 text-sm text-gray-500">
-                        <a href="editprofile" class="hover:underline">Create your profile</a>
+                        <a href="/student/editprofile" class="hover:underline">Create your profile</a>
                         <span>-</span>
-                        <a href="editprofile"  class="hover:underline">Add your bio</a>
+                        <a href="/student/editprofile"  class="hover:underline">Add your bio</a>
                     </div>
                 </div>
             </div>
 
 
-            <a href="editprofile"
+            <a href="/student/editprofile"
                 class="px-4 py-2 bg-gray-300 hover:bg-gray-300 text-gray-700 rounded-lg">Edit Profile
             </a>
 

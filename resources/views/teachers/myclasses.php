@@ -88,9 +88,9 @@
                         </div>
                     </div>
                     <div class="mt-4 flex justify-between">
-                        <button class="text-blue-500 hover:text-blue-600 px-4 py-2 rounded-md border border-blue-500">
+                        <a href="/teacher/updateclass/${classItem.id}" class="text-blue-500 hover:text-blue-600 px-4 py-2 rounded-md border border-blue-500">
                             Joined Students
-                        </button>
+                        </a>
                         <a href="/teacher/updateclass/${classItem.id}" class="text-yellow-500 hover:text-yellow-600 px-4 py-2 rounded-md border border-yellow-500">
                             Edit Class
                         </a>

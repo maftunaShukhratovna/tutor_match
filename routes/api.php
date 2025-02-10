@@ -8,10 +8,21 @@ use App\Http\controllers\API\AdminController;
 use App\Http\controllers\API\ClassController;
 
 Router::get('/api/students/getInfo',[StudentController::class,'show'],'auth:api');
+Router::get('/api/students/getClasses',[StudentController::class,'showAllClasses'],'auth:api');
+Router::get('/api/students/getMyClasses',[StudentController::class,'showMyClasses'],'auth:api');
+
+
+Router::get('/api/students/getClassInfo/{id}',[StudentController::class,'showClassInfo'],'auth:api');
+
+Router::post('/api/students/registerClass', [ClassController::class , 'registerclass'], 'auth:api');
 Router::put('/api/student/updateInfo', [StudentController::class , 'updateProfile'], 'auth:api');
+
+
 
 Router::post('/api/login', [UserController::class, 'login'],'auth:api');
 Router::post('/api/register', [UserController::class , 'store'],'auth:api');
+
+
 
 Router::get('/api/teacher/getInfo',[TeacherController::class,'teacherinfo'],'auth:api');
 Router::get('/api/teacher/getClassInfo/{id}',[ClassController::class,'classinfo'],'auth:api');

@@ -78,6 +78,28 @@
             </form>
         </div>
     </div>
+<!-- Sahifa oxirida -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const formatSelect = document.querySelector('select[name="format"]');
+        const platformSection = document.getElementById('platform_section');
+        const addressSection = document.getElementById('address_section');
+
+        function toggleFields() {
+            if (formatSelect.value === "online") {
+                platformSection.classList.remove("hidden");
+                addressSection.classList.add("hidden");
+            } else {
+                platformSection.classList.add("hidden");
+                addressSection.classList.remove("hidden");
+            }
+        }
+
+        toggleFields();
+
+        formatSelect.addEventListener("change", toggleFields);
+    });
+</script>
 
 <script>
     async function createClass(event) {
@@ -107,13 +129,12 @@
     const { default: apiFetch } = await import('/js/utils/apiFetch.js');
 
     try {
-        // ✅ Tokenni konsolga chiqarish
         const token = localStorage.getItem('token');
         console.log("LocalStorage'dan olingan token:", token);
 
         const data = await apiFetch('/teacher/createclass', {
             method: 'POST',
-            body: formData // ✅ To'g'ri `formData` jo‘natish
+            body: formData 
         });
 
         button.innerHTML = 'Class Created ✅';

@@ -131,6 +131,27 @@ class ClassController{
           
     }
 
+    public function registerClass(){
+        $classData = $this->validate([
+            'class_id'=>'int',
+            'student_id'=>'int',
+            'action'=>'string'
+        ]);
+
+        $class=new Classes();
+
+        if($classData['action']=='register'){
+            $class->registerClass($classData['student_id'], $classData['class_id']);
+        } else if($classData['action']=='cancel'){
+            $class->deleteClass($classData['student_id'], $classData['class_id']);
+        }
+
+
+        apiResponse([
+            'message' => 'class status changed'
+        ]);
+
+    }
 
 
 
