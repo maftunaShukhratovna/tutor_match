@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="flex space-x-4">
-            <a href="#" class="text-gray-600 hover:text-blue-600 font-medium">Search</a>
+            <a href="/" class="text-gray-600 hover:text-blue-600 font-medium">Home</a>
             <a href="/login" class="text-gray-600 hover:text-blue-600 font-medium">Log in</a>
             <a href="/register" class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 font-medium shadow-md">Sign up</a>
         </div>
